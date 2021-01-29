@@ -1,5 +1,8 @@
 package com.dkit.gd2.johnloane;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * GD2 Regular Expessions - we want to know about this
  * as it will allow us to validate user input
@@ -9,13 +12,97 @@ public class App
 {
     public static void main( String[] args )
     {
-        stringRegularExpressions();
-        alphaNumericRegularExpressions();
-        alphaNumericRegularExpressionsMatches();
-        alphaNumericEndFindMultipleCharactersRegex();
-        alphaNumericRangesRegex();
-        whiteSpaceRegex();
-        specificNumberOfOccurrencesRegex();
+//        stringRegularExpressions();
+//        alphaNumericRegularExpressions();
+//        alphaNumericRegularExpressionsMatches();
+//        alphaNumericEndFindMultipleCharactersRegex();
+//        alphaNumericRangesRegex();
+//        whiteSpaceRegex();
+//        specificNumberOfOccurrencesRegex();
+        introToPatternMatcher();
+        findOccurrencesWithPatternMatcher();
+        findOccurrencesWithPatternMatcherGroup();
+    }
+
+    private static void findOccurrencesWithPatternMatcherGroup()
+    {
+        StringBuilder htmlText = new StringBuilder("<h1>Page Heading</h1>");
+        htmlText.append("<h2>Sub-heading</h2>");
+        htmlText.append("<p>This is paragraph about something</p>");
+        htmlText.append("<p>Another paragraph</p>");
+        htmlText.append("<h2>Summary</h2>");
+        htmlText.append("<p>This is the summary</p>");
+
+        //The ? changes the regex from greedy - get as much as possible
+        //to lazy - do as little as possible
+        String h2Pattern = "(<h2>.*?</h2>)";
+        Pattern pattern = Pattern.compile((h2Pattern));
+        Matcher matcher = pattern.matcher(htmlText);
+        System.out.println(htmlText);
+        System.out.println(matcher.matches());
+
+        matcher.reset();
+        while(matcher.find())
+        {
+            System.out.println("Occurrence: " + matcher.group(1));
+        }
+
+        String h2GroupPattern = "(<h2>)(.*?)(</h2>)";
+        Pattern groupPattern = Pattern.compile((h2GroupPattern));
+        Matcher groupMatcher = groupPattern.matcher(htmlText);
+        System.out.println(htmlText);
+        System.out.println(groupMatcher.matches());
+
+        groupMatcher.reset();
+        while(groupMatcher.find())
+        {
+            System.out.println("Occurrence: " + groupMatcher.group(2));
+        }
+
+
+    }
+
+    private static void findOccurrencesWithPatternMatcher()
+    {
+        StringBuilder htmlText = new StringBuilder("<h1>Page Heading</h1>");
+        htmlText.append("<h2>Sub-heading</h2>");
+        htmlText.append("<p>This is paragraph about something</p>");
+        htmlText.append("<p>Another paragraph</p>");
+        htmlText.append("<h2>Summary</h2>");
+        htmlText.append("<p>This is the summary</p>");
+
+        String h2Pattern = "<h2>";
+        Pattern pattern = Pattern.compile((h2Pattern));
+        Matcher matcher = pattern.matcher(htmlText);
+        System.out.println(htmlText);
+        System.out.println(matcher.matches());
+
+        matcher.reset();
+        int count = 0;
+        while(matcher.find())
+        {
+            count++;
+            System.out.println("Occurrence " + count + " : " + matcher.start() + " to " + matcher.end());
+        }
+    }
+
+    private static void introToPatternMatcher()
+    {
+        //StringBuilder is a mutable String
+        //String is immutable
+        //mutable = can be changed
+        StringBuilder htmlText = new StringBuilder("<h1>Page Heading</h1>");
+        htmlText.append("<h2>Sub-heading</h2>");
+        htmlText.append("<p>This is paragraph about something</p>");
+        htmlText.append("<p>Another paragraph</p>");
+        htmlText.append("<h2>Summary</h2>");
+        htmlText.append("<p>This is the summary</p>");
+
+        String h2Pattern = ".*<h2>.*";
+        Pattern pattern = Pattern.compile((h2Pattern));
+        Matcher matcher = pattern.matcher(htmlText);
+        System.out.println(htmlText);
+        System.out.println(matcher.matches());
     }
 
     private static void specificNumberOfOccurrencesRegex()
