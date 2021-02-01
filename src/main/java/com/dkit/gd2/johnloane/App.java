@@ -19,9 +19,202 @@ public class App
 //        alphaNumericRangesRegex();
 //        whiteSpaceRegex();
 //        specificNumberOfOccurrencesRegex();
-        introToPatternMatcher();
-        findOccurrencesWithPatternMatcher();
-        findOccurrencesWithPatternMatcherGroup();
+//        introToPatternMatcher();
+//        findOccurrencesWithPatternMatcher();
+//        findOccurrencesWithPatternMatcherGroup();
+//          orAndRegex();
+//          whyWeNeedNegativeLookAheadRegex();
+//          negativeLookAheadRegex();
+//          usPhoneNumberRegex();
+//          visaRegex();
+//        challengeOne();
+//        challengeTwo();
+//        challengeThree();
+//        challengeFour();
+//        challengeFive();
+//        challengeSix();
+//        challengeSeven();
+        challengeEight();
+    }
+
+    private static void challengeEight()
+    {
+        //Modify challenge 7 to use a group so that we can print out the digits that occur in a string that has multiple occurrences of the pattern. Use Pattern, Matcher.
+        //The output for the String below should be 135, 7, 999
+        String challenge8 = "abcd.135usqv.7tzik.999";
+
+        String regExp = "[A-z][a-z]+\\.(\\d+)";
+        Pattern pattern = Pattern.compile(regExp);
+        Matcher matcher = pattern.matcher(challenge8);
+
+        while(matcher.find())
+        {
+            System.out.println("Occurrence: " + matcher.group(1));
+        }
+
+
+    }
+
+    private static void challengeSeven()
+    {
+        //Write a regex that match a string that starts with a series of letters
+        //The letters are followed by a period. After the period there are series
+        //of digits. "kjsl.22" should match, "f5.12a" should not match
+        String challenge7 = "abcd.135";
+        //If you want a . you need to escape it
+        //. -> will match anything in regex
+        String regExp = "^[A-z][a-z]+\\.\\d+$";
+        System.out.println(challenge7.matches(regExp));
+    }
+
+    private static void challengeSix()
+    {
+        //Write a regex that will match match challenge 5 string in its entirety
+        String challenge5 = "aaabccccccccdddefffg";
+
+        String regExp = "^a{3}bc{8}d{3}ef{3}g$";
+        System.out.println(challenge5.matches(regExp));
+    }
+
+    private static void challengeFive()
+    {
+        //Write regex to match String below. Verify with String.matches()
+        String challenge5 = "aaabccccccccdddefffg";
+
+        String regExp = "[a-g]+";
+        System.out.println(challenge5.matches(regExp));
+    }
+
+    private static void challengeFour()
+    {
+        //Replace all occurrences of whitespace with _ in following String
+        //Print the new String
+        String challenge4 = "Replace all blanks with whitespaces";
+        System.out.println(challenge4.replaceAll("\\s", "_"));
+    }
+
+    private static void challengeThree()
+    {
+        //In challenge 2 we used String.matches
+        //Use Matcher.matches to check for matches.
+        //Hint - compile your regex pattern
+        String challenge1 = "I want a bike.";
+        String challenge2 = "I want a ball.";
+
+        String regExp = "I want a (bike|ball)\\.";
+        Pattern pattern = Pattern.compile(regExp);
+        Matcher matcher = pattern.matcher(challenge1);
+        System.out.println(matcher.matches());
+
+        matcher = pattern.matcher(challenge2);
+        System.out.println(matcher.matches());
+
+
+    }
+
+    private static void challengeTwo()
+    {
+        //Write a regex that will match the two strings below. Verify using matches
+        String challenge1 = "I want a bike.";
+        String challenge2 = "I want a ball.";
+
+        String regExp = "I want a (bike|ball).";
+        System.out.println(challenge1.matches(regExp));
+        System.out.println(challenge2.matches(regExp));
+    }
+
+    private static void challengeOne()
+    {
+        //Write the string literal regex that will match the following String
+        //Use String.matches() to verify your answer.
+        String challenge1 = "I want a bike.";
+        System.out.println(challenge1.matches("I want a bike."));
+
+
+
+    }
+
+    private static void visaRegex()
+    {
+        //Visa has to start with 4, can have either 13 or 16 digits in total
+        //4444444444 , 13 4's Valid
+        //4444444444444, 16 4's Valid
+        //577777 Invalid
+        //444444 //Not valid
+        //444444444444444444 Not valid
+        String visa1 = "4444444444444"; //Valid
+        String visa2 = "5444444444444"; //Invalid
+        String visa3 = "4444444444444444"; //Valid
+        String visa4 = "4444"; //Invalid
+
+        String cianVisaRegex = "^4(\\d){12}$|^4(\\d){15}$";
+        String visaRegex = "^4[0-9]{12}([0-9]{3})?$";
+        System.out.println("visa1 " + visa1.matches(visaRegex));
+        System.out.println("visa2 " + visa2.matches(visaRegex));
+        System.out.println("visa3 " + visa3.matches(visaRegex));
+        System.out.println("visa4 " + visa4.matches(visaRegex));
+
+    }
+
+    private static void usPhoneNumberRegex()
+    {
+        //(800) 123-4567
+        String phone1 = "1234567890"; //Should not match
+        String phone2 = "(123) 456-7890"; //Match
+        String phone3 = "123 456-7890"; //No match
+        String phone4 = "(123)456-7890"; //No match
+        String phone5 = "****(123) 456-7890***"; //No match
+
+        String usPhoneNumberRegex = "^[\\(]{1}[\\d]{3}[\\)]{1}[ ]{1}[\\d]{3}-[\\d]{4}$";
+        System.out.println("phone1 = " + phone1.matches(usPhoneNumberRegex));
+        System.out.println("phone2 = " + phone2.matches(usPhoneNumberRegex));
+        System.out.println("phone3 = " + phone3.matches(usPhoneNumberRegex));
+        System.out.println("phone4 = " + phone4.matches(usPhoneNumberRegex));
+        System.out.println("phone5 = " + phone5.matches(usPhoneNumberRegex));
+    }
+
+    private static void negativeLookAheadRegex()
+    {
+        String tvTest = "tstvtkt";
+        String tNotVRegExp = "t(?!v)";
+
+        Pattern tNotVPattern = Pattern.compile(tNotVRegExp);
+        Matcher tNotVMatcher = tNotVPattern.matcher(tvTest);
+
+        int count = 0;
+        while(tNotVMatcher.find())
+        {
+            count++;
+            System.out.println(tvTest);
+            System.out.println("Occurrence " + count + " : " + tNotVMatcher.start() + " to " + tNotVMatcher.end());
+        }
+    }
+
+    private static void whyWeNeedNegativeLookAheadRegex()
+    {
+        //[^abc]
+        String tvTest = "tstvtkt";
+        String tNotVRegExp = "t[^v]";
+
+        Pattern tNotVPattern = Pattern.compile(tNotVRegExp);
+        Matcher tNotVMatcher = tNotVPattern.matcher(tvTest);
+
+        int count = 0;
+        while(tNotVMatcher.find())
+        {
+            count++;
+            System.out.println(tvTest);
+            System.out.println("Occurrence " + count + " : " + tNotVMatcher.start() + " to " + tNotVMatcher.end());
+        }
+
+
+    }
+
+    private static void orAndRegex()
+    {
+        //"abc" -> "a" and "b" and "c"
+        System.out.println("harry".replaceAll("[H|h]arry", "Larry"));
+        System.out.println("Harry".replaceAll("[H|h]arry", "Larry"));
     }
 
     private static void findOccurrencesWithPatternMatcherGroup()
